@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSA Chat</title>
+  <title>RSA Chat Demo</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,6 +21,15 @@
     <div class="chat">
       <div class="chat-header">Alice</div>
       <div class="messages" id="messages"></div>
+
+      <!-- Encryption Display -->
+      <div class="encryption-panel" id="encryptionPanel">
+        <h3>🔐 Encryption Details</h3>
+        <div><strong>Plaintext:</strong> <span id="plainText"></span></div>
+        <div><strong>Encrypted:</strong> <span id="cipherText"></span></div>
+        <div><strong>Decrypted:</strong> <span id="decryptedText"></span></div>
+      </div>
+
       <div class="chat-input">
         <input type="text" id="messageInput" placeholder="Type a message...">
         <button id="sendBtn">Send</button>
