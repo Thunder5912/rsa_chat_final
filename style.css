@@ -40,7 +40,6 @@ body {
   padding: 15px 20px;
   border-bottom: 1px solid #2a3942;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
 .contact:hover,
@@ -90,6 +89,7 @@ body {
   background: #202c33;
 }
 
+/* Chat input */
 .chat-input {
   display: flex;
   padding: 10px;
@@ -116,9 +116,27 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.2s;
 }
 
 .chat-input button:hover {
   background: #007a62;
+}
+
+/* Encryption Panel */
+.encryption-panel {
+  padding: 15px 20px;
+  background: #111b21;
+  border-top: 1px solid #2a3942;
+  font-size: 13px;
+}
+
+.encryption-panel h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #00a884;
+}
+
+.encryption-panel span {
+  color: #9eeaf9;
+  word-break: break-all;
 }
