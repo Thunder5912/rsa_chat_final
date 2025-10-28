@@ -1,9 +1,8 @@
-// Simple RSA Chat (client-only demo)
-
 let publicKey, privateKey;
 
+// Generate RSA key pair
 async function generateRSAKeys() {
-  const keyPair = await window.crypto.subtle.generateKey(
+  const keyPair = await crypto.subtle.generateKey(
     {
       name: "RSA-OAEP",
       modulusLength: 2048,
@@ -13,23 +12,26 @@ async function generateRSAKeys() {
     true,
     ["encrypt", "decrypt"]
   );
-
   publicKey = keyPair.publicKey;
   privateKey = keyPair.privateKey;
+  console.log("RSA keys generated ✅");
 }
 
-async function encryptMessage(message, key = publicKey) {
-  const enc = new TextEncoder().encode(message);
-  const encrypted = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, key, enc);
-  return btoa(String.fromCharCode(...new Uint8Array(encrypted)));
+// Encrypt message
+async function encryptMessage(message) {
+  const encoded = new TextEncoder().encode(message);
+  const ciphertext = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, encoded);
+  return btoa(String.fromCharCode(...new Uint8Array(ciphertext)));
 }
 
-async function decryptMessage(encryptedBase64) {
-  const encrypted = Uint8Array.from(atob(encryptedBase64), c => c.charCodeAt(0));
-  const decrypted = await crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, encrypted);
+// Decrypt message
+async function decryptMessage(ciphertextBase64) {
+  const ciphertext = Uint8Array.from(atob(ciphertextBase64), c => c.charCodeAt(0));
+  const decrypted = await crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, ciphertext);
   return new TextDecoder().decode(decrypted);
 }
 
+// Add chat message to UI
 function addMessage(text, type) {
   const msgDiv = document.createElement("div");
   msgDiv.classList.add("message", type);
@@ -38,23 +40,38 @@ function addMessage(text, type) {
   document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
 }
 
+// Display encryption details
+function showEncryptionDetails(plain, encrypted, decrypted) {
+  document.getElementById("plainText").textContent = plain;
+  document.getElementById("cipherText").textContent = encrypted;
+  document.getElementById("decryptedText").textContent = decrypted;
+}
+
+// Handle send button
 document.getElementById("sendBtn").addEventListener("click", async () => {
   const input = document.getElementById("messageInput");
   const message = input.value.trim();
   if (!message) return;
 
+  // Add sent message
   addMessage(message, "sent");
 
+  // Encrypt
   const encrypted = await encryptMessage(message);
-  console.log("Encrypted:", encrypted);
 
-  // Simulate receiving an encrypted message after delay
+  // Simulate send/receive delay
   setTimeout(async () => {
     const decrypted = await decryptMessage(encrypted);
+
+    // Add received message
     addMessage(decrypted, "received");
+
+    // Show encryption process
+    showEncryptionDetails(message, encrypted, decrypted);
   }, 800);
 
   input.value = "";
 });
 
+// Initialize keys
 generateRSAKeys();
