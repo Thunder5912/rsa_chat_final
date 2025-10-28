@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSA Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="header">RSA Chat</div>
+      <div class="contact-list">
+        <div class="contact active">Alice</div>
+        <div class="contact">Bob</div>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat">
+      <div class="chat-header">Alice</div>
+      <div class="messages" id="messages"></div>
+      <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
